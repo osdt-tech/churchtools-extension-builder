@@ -1,0 +1,10 @@
+{
+  "name": "churchtools-extension-builder",
+  "version": "0.1.0",
+  "description": "Eigene ChurchTools-Erweiterungen (Custom Modules unter /ccm/...) für jede ChurchTools-Instanz bauen, packen und installieren.",
+  "author": {
+    "name": "Otto Schmidt"
+  },
+  "license": "MIT",
+  "keywords": ["churchtools", "gemeinde", "church", "extension", "custom-module", "vite"]
+}
