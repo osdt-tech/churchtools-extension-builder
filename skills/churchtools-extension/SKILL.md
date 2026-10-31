@@ -12,7 +12,7 @@ Funktioniert mit jeder ChurchTools-Instanz (`https://<gemeinde>.church.tools` od
 Vor dem Bauen festlegen (fehlendes in **einer** Rückfrage klären):
 
 1. **Instanz-URL** (`<INSTANZ>`): Ist ein Browser-Tab mit ChurchTools offen, die URL daraus übernehmen. Sonst nachfragen.
-2. **Kürzel** (`<kuerzel>`): kurz, nur Kleinbuchstaben/Ziffern/Bindestrich, z. B. `dienstplan`. Vor dem Anlegen mit `GET /api/custommodules` prüfen, dass es noch frei ist.
+2. **Kürzel** (`<kuerzel>`): kurz (2–50 Zeichen), nur Kleinbuchstaben/Ziffern/Bindestrich, z. B. `dienstplan`. Vor dem Anlegen mit `GET /api/custommodules` prüfen, dass es noch frei ist.
 3. **Zweck und Daten**: Was soll die Erweiterung zeigen oder tun, welche Gruppen/Personen/Termine betrifft sie, wer nutzt sie?
 4. **Design**: Farben und Schrift der Gemeinde (Hex-Werte, Logo-Stil). Ohne Angabe: neutrales Design aus `references/design.md`.
 
@@ -70,7 +70,7 @@ Regeln für den Code:
 - Keine instanzspezifischen IDs (Gruppen-, Personen-, Kalender-IDs) hart codieren, wenn sie sich ermitteln lassen; sonst als Konstanten oben in `main.js` sammeln und dem Benutzer nennen.
 - Mobil nutzbar bauen (ChurchTools wird oft am Handy geöffnet).
 
-Wichtige Endpunkte: `references/api.md`. Bei Unsicherheit die OpenAPI-Doku der Instanz prüfen unter `<INSTANZ>/api`.
+Wichtige Endpunkte: `references/api.md`. Bei Unsicherheit die OpenAPI-Doku der Instanz prüfen unter `<INSTANZ>/api` (vollständige Spec: `<INSTANZ>/system/runtime/swagger/openapi-ui.json`, seit 3.138 mit Rechten und Fehlerfällen je Endpunkt).
 
 ## 4. Bauen und packen
 

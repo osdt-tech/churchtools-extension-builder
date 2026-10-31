@@ -1,11 +1,21 @@
 # Installieren und aktualisieren per API
 
-Nicht offiziell dokumentiert, aber vom ChurchTools-Frontend („Erweiterung hinzufügen“) selbst genutzt und getestet:
+Stand: abgeglichen mit der OpenAPI-Spezifikation von ChurchTools 3.138.1.
 
-- **Neu anlegen:** `POST /api/custommodules` mit JSON `{name, shorty, sortKey, inMenu, description}` → Antwort `data.id`
+- **Neu anlegen:** `POST /api/custommodules` mit JSON `{name, shorty, sortKey, inMenu, description}`. Die Antwort enthält `data.id`.
 - **Metadaten ändern:** `PUT /api/custommodules/{id}` mit denselben Feldern plus `id`
 - **ZIP hochladen (neu oder Update):** `POST /api/files/custom_module/{id}` als `multipart/form-data`, Feld `files[]` = ZIP
 - Alle schreibenden Aufrufe mit Header `CSRF-Token` aus `GET /api/csrftoken`
+
+Dokumentationsstand:
+- Der **Upload** ist offiziell dokumentiert (`POST /files/{domainType}/{domainIdentifier}`, `custom_module` als erlaubter `domainType`, Feld `files[]`). Er erfordert Schreibrechte auf die Erweiterung.
+- **`/custommodules` (GET/POST/PUT) steht weiterhin nicht in der Spec.** Das ChurchTools-Frontend („Erweiterung hinzufügen“) nutzt diese Endpunkte selbst, deshalb funktionieren sie. Sie können sich aber ohne Ankündigung ändern. Die Spec enthält nur die Schemas dazu (`CustomModule`, `CustomModuleCreate`):
+  - `name`: Pflicht, 1–100 Zeichen
+  - `sortKey`: Pflicht, Ganzzahl
+  - `inMenu`: Pflicht, Boolean
+  - `description`: optional, max. 300 Zeichen
+  - `shorty`: Pflicht beim Anlegen, 2–50 Zeichen
+- `GET /api/custommodules` ist auch ohne Anmeldung abrufbar. Name und Beschreibung einer Erweiterung sind daher öffentlich sichtbar und dürfen keine internen Infos enthalten.
 
 ## Ablauf mit Browser-Werkzeug
 
