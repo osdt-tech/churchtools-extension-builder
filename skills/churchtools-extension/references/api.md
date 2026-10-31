@@ -6,7 +6,7 @@ Paginierung gibt es nur bei einzelnen Listen (`?page=1&limit=100`, Infos in `met
 
 ## Allgemein
 - `GET /whoami` – angemeldete Person. Ohne Anmeldung kommt die anonyme Person zurück (`id` = -1) und kein Fehler. `?only_allow_authenticated=true` erzwingt stattdessen 401.
-- `GET /csrftoken` – Token für schreibende Aufrufe (Header `CSRF-Token`). Ohne Session antwortet die Instanz mit 401 „Session expired“; die Spec nennt `data: null`, also beides abfangen.
+- `GET /csrftoken` – Token für schreibende Aufrufe (Header `CSRF-Token`). Ohne Session antwortet ChurchTools in der Praxis mit 401 „Session expired“, die Spec nennt `data: null` – beides abfangen.
 - `GET /custommodules` – installierte Erweiterungen und ihre Kürzel (nicht in der OpenAPI-Doku, siehe `install-api.md`)
 
 ## Personen und Gruppen

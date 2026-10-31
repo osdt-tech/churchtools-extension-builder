@@ -15,7 +15,7 @@ Dokumentationsstand:
   - `inMenu`: Pflicht, Boolean
   - `description`: optional, max. 300 Zeichen
   - `shorty`: Pflicht beim Anlegen, 2–50 Zeichen
-- `GET /api/custommodules` ist auch ohne Anmeldung abrufbar. Name und Beschreibung einer Erweiterung sind daher öffentlich sichtbar und dürfen keine internen Infos enthalten.
+- `GET /api/custommodules` kann auch ohne Anmeldung abrufbar sein. Name und Beschreibung einer Erweiterung daher als öffentlich behandeln und keine internen Infos hineinschreiben.
 
 ## Ablauf mit Browser-Werkzeug
 
