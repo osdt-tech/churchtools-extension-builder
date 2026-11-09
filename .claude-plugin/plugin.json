@@ -1,7 +1,7 @@
 {
   "name": "churchtools-extension-builder",
   "displayName": "ChurchTools Extension Builder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Eigene ChurchTools-Erweiterungen (Custom Modules unter /ccm/...) für jede ChurchTools-Instanz bauen, packen und installieren.",
   "author": {
     "name": "Otto Schmidt"

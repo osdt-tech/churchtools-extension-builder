@@ -4,13 +4,25 @@ Lässt Claude eigene Erweiterungen (Custom Modules) für **jede ChurchTools-Inst
 
 ## Was das Plugin kann
 - Fragt Instanz-URL, Kürzel, Zweck und Design der Gemeinde ab
-- Legt ein schlankes Vite-Projekt mit korrektem `base`-Pfad an
+- Legt aus einer mitgelieferten Vorlage ein schlankes Vite-Projekt mit korrektem `base`-Pfad an
+- Speichert Daten bei Bedarf im Datenspeicher der Erweiterung in ChurchTools (kein eigener Server)
 - Nutzt die ChurchTools-REST-API mit der Session des angemeldeten Benutzers (keine Passwörter im Code)
 - Baut und prüft die ZIP (richtige Struktur für den Upload)
 - Installiert/aktualisiert die Erweiterung wahlweise manuell oder – mit Browser-Zugriff (z. B. Claude in Chrome) – automatisch per API
 - Prüft das Ergebnis und hilft bei typischen Fehlern (leere Seite, fehlende Rechte)
 
+## Installation
+In Claude Code:
+
+```
+/plugin marketplace add osdt-tech/churchtools-extension-builder
+/plugin install churchtools-extension-builder@osdt
+```
+
+Danach einfach beschreiben, was die Erweiterung können soll (siehe Beispiele). Für Updates: `/plugin marketplace update osdt`.
+
 ## Voraussetzungen
+- Node.js (mit `npm`) auf dem Rechner bzw. in der Umgebung, in der Claude arbeitet
 - ChurchTools-Instanz mit aktivierten Erweiterungen
 - Admin-Rechte für Erweiterungen zum Hochladen (sonst übernimmt ein Admin den Upload)
 - Für den automatischen Upload: Browser-Werkzeug, in dem der Benutzer bei ChurchTools angemeldet ist
@@ -21,8 +33,8 @@ Lässt Claude eigene Erweiterungen (Custom Modules) für **jede ChurchTools-Inst
 - „Aktualisiere die Erweiterung ‚dienstplan‘ mit der neuen Version.“
 
 ## Was das Plugin ausführt, sendet und abruft
-Das Plugin besteht nur aus einem Skill (Anweisungen für Claude). Es enthält keine Hooks, keine MCP-Server und keinen ausführbaren Code. Bei der Nutzung kann Claude:
-- **lokal ausführen:** `npm init`, `npm i -D vite@5.4.10` (aus der öffentlichen npm-Registry), `npx vite build`, `zip`/`unzip`, `base64` – nur im Arbeitsverzeichnis des Projekts.
+Das Plugin besteht nur aus einem Skill (Anweisungen für Claude) und einer Projektvorlage (`assets/template/`), aus der die Erweiterung entsteht. Es enthält keine Hooks, keine MCP-Server und keine Skripte, die das Plugin selbst ausführt. Bei der Nutzung kann Claude:
+- **lokal ausführen:** `npm install` (lädt Vite 5.4.21 aus der öffentlichen npm-Registry), `npx vite build`, `zip`/`unzip` bzw. `tar`, `base64` – nur im Arbeitsverzeichnis des Projekts.
 - **abrufen und senden:** ausschließlich Aufrufe an die ChurchTools-Instanz, die der Benutzer selbst angibt (`<INSTANZ>/api/...`), mit der bestehenden Browser-Session des Benutzers. Schreibende Aufrufe (Erweiterung anlegen, ZIP hochladen) nur nach ausdrücklicher Zustimmung.
 - **nicht:** Daten an Dritte oder an den Autor senden, Zugangsdaten speichern oder Einstellungen von Claude ändern.
 
@@ -32,7 +44,7 @@ Das Plugin besteht nur aus einem Skill (Anweisungen für Claude). Es enthält ke
 - Fragen und Fehlermeldungen: über die Issues dieses GitHub-Repositorys.
 
 ## Hinweis
-Die Upload-Endpunkte für Erweiterungen sind von ChurchTools nicht offiziell dokumentiert und können sich ändern. Der manuelle Upload funktioniert immer.
+Die Endpunkte zum Anlegen von Erweiterungen und für ihren Datenspeicher sind von ChurchTools nicht offiziell dokumentiert und können sich ändern. Der manuelle Upload funktioniert immer.
 
 Kein offizielles ChurchTools-Produkt; nicht mit dem Hersteller von ChurchTools verbunden.
 
