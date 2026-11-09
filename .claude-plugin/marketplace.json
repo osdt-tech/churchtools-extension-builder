@@ -1,0 +1,14 @@
+{
+  "name": "osdt",
+  "description": "Plugins von OSDT für ChurchTools.",
+  "owner": {
+    "name": "Otto Schmidt"
+  },
+  "plugins": [
+    {
+      "name": "churchtools-extension-builder",
+      "source": "./",
+      "description": "Eigene ChurchTools-Erweiterungen (Custom Modules unter /ccm/...) für jede ChurchTools-Instanz bauen, packen und installieren."
+    }
+  ]
+}

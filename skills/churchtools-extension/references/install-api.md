@@ -21,27 +21,45 @@ Dokumentationsstand:
 
 Im Tab ausführen, in dem der Benutzer bei `<INSTANZ>` angemeldet ist (nur dort liegen die Session-Cookies).
 
-1. ZIP als Base64 erzeugen: `base64 -w0 <kuerzel>-extension.zip > zip.b64` und den Inhalt lesen. Kleine Bundles (ohne churchtools-client) halten das Base64 kurz.
-2. Skript ausführen:
+1. ZIP als Base64 in einer Zeile erzeugen und den Inhalt lesen. Kleine Bundles (ohne churchtools-client) halten das Base64 kurz.
+   - macOS/Linux: `base64 < <kuerzel>-extension.zip | tr -d '\n' > zip.b64` (nicht `base64 -w0`, das gibt es auf macOS nicht)
+   - Windows (PowerShell): `[Convert]::ToBase64String([IO.File]::ReadAllBytes("$PWD\<kuerzel>-extension.zip")) | Set-Content -NoNewline zip.b64`
+2. Skript ausführen. `NAME` und `DESCRIPTION` als gültige JS-Strings einsetzen (Anführungszeichen escapen). Das Skript ist bewusst in eine async-Funktion gepackt, weil nicht jedes Browser-Werkzeug `await` auf oberster Ebene ausführt.
 
 ```js
-const b64 = '<INHALT VON zip.b64>';
-const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-const tok = (await fetch('/api/csrftoken').then(r => r.json())).data;
-const existing = (await fetch('/api/custommodules').then(r => r.json())).data.find(m => m.shorty === '<kuerzel>');
-let id = existing && existing.id;
-if (!id) {
-  const r = await fetch('/api/custommodules', { method: 'POST', headers: { 'Content-Type': 'application/json', 'CSRF-Token': tok },
-    body: JSON.stringify({ name: '<Name>', shorty: '<kuerzel>', sortKey: 0, inMenu: true, description: '<Beschreibung>' }) });
-  id = (await r.json()).data.id;
-}
-const fd = new FormData();
-fd.append('files[]', new File([bytes], '<kuerzel>-extension.zip', { type: 'application/zip' }));
-const r2 = await fetch('/api/files/custom_module/' + id, { method: 'POST', headers: { 'CSRF-Token': tok }, body: fd });
-JSON.stringify({ id, existed: !!existing, upload: r2.status });
+(async () => {
+  const SHORTY = '<kuerzel>', NAME = '<Name>', DESCRIPTION = '<Beschreibung>';
+  const b64 = '<INHALT VON zip.b64>';
+  const call = async (step, path, opts = {}) => {
+    const r = await fetch('/api' + path, { credentials: 'same-origin', ...opts });
+    const text = await r.text();
+    if (!r.ok) throw new Error(step + ': HTTP ' + r.status + ' ' + text.slice(0, 300));
+    return text ? JSON.parse(text).data : null;
+  };
+  try {
+    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const tok = await call('CSRF-Token', '/csrftoken');
+    const existing = (await call('Erweiterungen lesen', '/custommodules')).find(m => m.shorty === SHORTY);
+    let id = existing && existing.id;
+    if (!id) {
+      id = (await call('Anlegen', '/custommodules', { method: 'POST', headers: { 'Content-Type': 'application/json', 'CSRF-Token': tok },
+        body: JSON.stringify({ name: NAME, shorty: SHORTY, sortKey: 0, inMenu: true, description: DESCRIPTION }) })).id;
+    }
+    const fd = new FormData();
+    fd.append('files[]', new File([bytes], SHORTY + '-extension.zip', { type: 'application/zip' }));
+    await call('Upload', '/files/custom_module/' + id, { method: 'POST', headers: { 'CSRF-Token': tok }, body: fd });
+    return JSON.stringify({ ok: true, id, existed: !!existing });
+  } catch (e) {
+    return JSON.stringify({ ok: false, error: String(e.message || e) });
+  }
+})();
 ```
+
+3. Ergebnis lesen: Bei `ok: false` nennt `error` den fehlgeschlagenen Schritt samt Statuscode und Antwort von ChurchTools. Nicht blind wiederholen, sondern die Ursache beheben (siehe Hinweise).
 
 ## Hinweise
 - Manche Browser-Werkzeuge blockieren Ausgaben mit URLs, die `?`, `=` oder `&` enthalten. Dann in der Ausgabe `.replace(/[?=&]/g, ' ')` anwenden.
 - Ist das Base64 zu groß für einen Aufruf: auf manuellen Upload (Weg A in SKILL.md) ausweichen.
-- Bei 403: Der Benutzer hat keine Admin-Rechte für Erweiterungen.
+- `Anlegen: HTTP 403` / `Upload: HTTP 403`: Der Benutzer hat keine Admin-Rechte für Erweiterungen bzw. keine Schreibrechte auf diese Erweiterung.
+- `Anlegen: HTTP 400/409/422`: meist ist das Kürzel schon vergeben oder ungültig (2–50 Zeichen). Anderes Kürzel wählen und `base` in `vite.config.js` anpassen, dann neu bauen.
+- `CSRF-Token: HTTP 401`: Der Benutzer ist in diesem Tab nicht (mehr) angemeldet.
