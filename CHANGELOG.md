@@ -2,6 +2,7 @@
 
 ## 0.2.1 – 2026-11-11
 - Projektvorlage als Markdown-Referenz (`references/template.md`) statt als Dateien unter `assets/template/` – das Plugin enthält damit nur noch Markdown, JSON und das Icon (Vorgabe des Plugin-Verzeichnisses)
+- Anleitung nach Testlauf geschärft: Titel-Escaping direkt im Skill, alte ZIP vor dem Packen löschen, Arbeitsverzeichnis fürs Bauen genannt, Umgang mit `npm audit`-Meldungen
 
 ## 0.2.0 – 2026-11-09
 - Projektvorlage unter `skills/churchtools-extension/assets/template/` statt Inline-Code im Skill

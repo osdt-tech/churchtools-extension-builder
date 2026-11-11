@@ -1,6 +1,6 @@
 # Projektvorlage
 
-Diese Dateien im Projektordner `<kuerzel>/` genau so anlegen (Pfade relativ zum Projektordner). Dabei überall `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen. Den Titel vorher HTML-escapen (`&`, `<`, `>`) und Backticks sowie `${` daraus entfernen, weil er in `index.html` und im Template-String in `src/main.js` landet.
+Diese Dateien im Projektordner `<kuerzel>/` genau so anlegen (Pfade relativ zum Projektordner). Dabei überall `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen. Den Titel vorher HTML-escapen (`&`, `<`, `>`) und Backticks, Backslashes sowie `${` daraus entfernen, weil er in `index.html` und im Template-String in `src/main.js` landet.
 
 Inhalt unverändert übernehmen – nichts kürzen, nichts „verbessern“. Die Vite-Version bleibt fest gepinnt.
 

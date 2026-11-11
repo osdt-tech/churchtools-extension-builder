@@ -32,9 +32,9 @@ Rechte: Erweiterungen anlegen und hochladen erfordert Admin-Rechte in ChurchTool
 
 Im Arbeitsverzeichnis (nicht im Ordner des Benutzers, außer er will den Quellcode dort haben):
 
-1. `references/template.md` lesen und die fünf Dateien daraus unverändert in `<kuerzel>/` anlegen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`, `src/style.css`).
-2. Dabei in allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen.
-3. `npm install` im Projektordner ausführen (installiert nur Vite 5.4.21).
+1. `references/template.md` lesen und die fünf Dateien daraus in `<kuerzel>/` anlegen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`, `src/style.css`) – bis auf die Platzhalter zeichengenau.
+2. Dabei in allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen. Den Titel vorher HTML-escapen (`&`, `<`, `>`) und Backticks, Backslashes sowie `${` daraus entfernen.
+3. `npm install` im Projektordner ausführen (installiert nur Vite 5.4.21). Meldet `npm` dabei Schwachstellen in Vite/esbuild: Sie betreffen den Entwicklungsserver, den dieser Skill nicht startet. Kein `npm audit fix --force` ausführen und `vite dev`/`vite preview` nicht verwenden.
 
 Die Vorlage bringt mit:
 - `vite.config.js` mit `base: '/ccm/<kuerzel>/'`
@@ -57,9 +57,12 @@ Wichtige Endpunkte: `references/api.md`. Bei Unsicherheit die OpenAPI-Doku der I
 
 ## 4. Bauen und packen
 
+Alle Befehle im Projektordner `<kuerzel>/` ausführen; dort entsteht auch die ZIP.
+
 macOS/Linux:
 ```bash
 npx vite build
+rm -f <kuerzel>-extension.zip   # sonst bleiben alte Assets im Archiv
 cd dist && zip -qr ../<kuerzel>-extension.zip . && cd ..
 unzip -l <kuerzel>-extension.zip   # prüfen: index.html + assets/ im Wurzelverzeichnis
 ```
@@ -67,6 +70,7 @@ unzip -l <kuerzel>-extension.zip   # prüfen: index.html + assets/ im Wurzelverz
 Windows (PowerShell, `zip` fehlt dort meist):
 ```powershell
 npx vite build
+Remove-Item <kuerzel>-extension.zip -ErrorAction SilentlyContinue
 tar -a -c -f <kuerzel>-extension.zip -C dist index.html assets
 tar -t -f <kuerzel>-extension.zip   # prüfen: index.html + assets/... ohne "dist/" davor
 ```
