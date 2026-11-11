@@ -33,7 +33,7 @@ Danach einfach beschreiben, was die Erweiterung können soll (siehe Beispiele). 
 - „Aktualisiere die Erweiterung ‚dienstplan‘ mit der neuen Version.“
 
 ## Was das Plugin ausführt, sendet und abruft
-Das Plugin besteht nur aus einem Skill (Anweisungen für Claude) und einer Projektvorlage (`assets/template/`), aus der die Erweiterung entsteht. Es enthält keine Hooks, keine MCP-Server und keine Skripte, die das Plugin selbst ausführt. Bei der Nutzung kann Claude:
+Das Plugin besteht nur aus einem Skill (Anweisungen für Claude) und einer Projektvorlage als Markdown-Referenz (`references/template.md`), aus der Claude die Projektdateien der Erweiterung anlegt. Es enthält ausschließlich Markdown-, JSON- und Bilddateien, keine Hooks, keine MCP-Server und keine Skripte, die das Plugin selbst ausführt. Bei der Nutzung kann Claude:
 - **lokal ausführen:** `npm install` (lädt Vite 5.4.21 aus der öffentlichen npm-Registry), `npx vite build`, `zip`/`unzip` bzw. `tar`, `base64` – nur im Arbeitsverzeichnis des Projekts.
 - **abrufen und senden:** ausschließlich Aufrufe an die ChurchTools-Instanz, die der Benutzer selbst angibt (`<INSTANZ>/api/...`), mit der bestehenden Browser-Session des Benutzers. Schreibende Aufrufe (Erweiterung anlegen, ZIP hochladen) nur nach ausdrücklicher Zustimmung.
 - **nicht:** Daten an Dritte oder an den Autor senden, Zugangsdaten speichern oder Einstellungen von Claude ändern.

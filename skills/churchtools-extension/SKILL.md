@@ -32,8 +32,8 @@ Rechte: Erweiterungen anlegen und hochladen erfordert Admin-Rechte in ChurchTool
 
 Im Arbeitsverzeichnis (nicht im Ordner des Benutzers, außer er will den Quellcode dort haben):
 
-1. Den Ordner `assets/template/` dieses Skills nach `<kuerzel>/` kopieren.
-2. In allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`).
+1. `references/template.md` lesen und die fünf Dateien daraus unverändert in `<kuerzel>/` anlegen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`, `src/style.css`).
+2. Dabei in allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen.
 3. `npm install` im Projektordner ausführen (installiert nur Vite 5.4.21).
 
 Die Vorlage bringt mit:

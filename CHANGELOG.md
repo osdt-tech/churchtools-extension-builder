@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 – 2026-11-11
+- Projektvorlage als Markdown-Referenz (`references/template.md`) statt als Dateien unter `assets/template/` – das Plugin enthält damit nur noch Markdown, JSON und das Icon (Vorgabe des Plugin-Verzeichnisses)
+
 ## 0.2.0 – 2026-11-09
 - Projektvorlage unter `skills/churchtools-extension/assets/template/` statt Inline-Code im Skill
 - Vorlage: `api`-Helfer setzt `CSRF-Token` und `Content-Type` selbst, dazu `apiAll` (Paginierung), `esc` (HTML-Escaping) und Fehleranzeige für 401/403
