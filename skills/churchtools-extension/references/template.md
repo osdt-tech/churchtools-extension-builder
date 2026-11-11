@@ -12,11 +12,14 @@ Inhalt unverändert übernehmen – nichts kürzen, nichts „verbessern“. Die
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
     "build": "vite build"
   },
   "devDependencies": {
-    "vite": "5.4.21"
+    "vite": "8.3.8"
   }
 }
 ```

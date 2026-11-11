@@ -22,7 +22,7 @@ In Claude Code:
 Danach einfach beschreiben, was die Erweiterung können soll (siehe Beispiele). Für Updates: `/plugin marketplace update osdt`.
 
 ## Voraussetzungen
-- Node.js (mit `npm`) auf dem Rechner bzw. in der Umgebung, in der Claude arbeitet
+- Node.js ab 20.19 bzw. ab 22.12 (mit `npm`) auf dem Rechner bzw. in der Umgebung, in der Claude arbeitet
 - ChurchTools-Instanz mit aktivierten Erweiterungen
 - Admin-Rechte für Erweiterungen zum Hochladen (sonst übernimmt ein Admin den Upload)
 - Für den automatischen Upload: Browser-Werkzeug, in dem der Benutzer bei ChurchTools angemeldet ist
@@ -34,7 +34,7 @@ Danach einfach beschreiben, was die Erweiterung können soll (siehe Beispiele). 
 
 ## Was das Plugin ausführt, sendet und abruft
 Das Plugin besteht nur aus einem Skill (Anweisungen für Claude) und einer Projektvorlage als Markdown-Referenz (`references/template.md`), aus der Claude die Projektdateien der Erweiterung anlegt. Es enthält ausschließlich Markdown-, JSON- und Bilddateien, keine Hooks, keine MCP-Server und keine Skripte, die das Plugin selbst ausführt. Bei der Nutzung kann Claude:
-- **lokal ausführen:** `npm install` (lädt Vite 5.4.21 aus der öffentlichen npm-Registry), `npx vite build`, `zip`/`unzip` bzw. `tar`, `base64` – nur im Arbeitsverzeichnis des Projekts.
+- **lokal ausführen:** `npm install` (lädt Vite 8.3.8 aus der öffentlichen npm-Registry), `npx vite build`, `zip`/`unzip` bzw. `tar`, `base64` – nur im Arbeitsverzeichnis des Projekts.
 - **abrufen und senden:** ausschließlich Aufrufe an die ChurchTools-Instanz, die der Benutzer selbst angibt (`<INSTANZ>/api/...`), mit der bestehenden Browser-Session des Benutzers. Schreibende Aufrufe (Erweiterung anlegen, ZIP hochladen) nur nach ausdrücklicher Zustimmung.
 - **nicht:** Daten an Dritte oder an den Autor senden, Zugangsdaten speichern oder Einstellungen von Claude ändern.
 
