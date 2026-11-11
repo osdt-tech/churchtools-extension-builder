@@ -32,9 +32,9 @@ Rechte: Erweiterungen anlegen und hochladen erfordert Admin-Rechte in ChurchTool
 
 Im Arbeitsverzeichnis (nicht im Ordner des Benutzers, außer er will den Quellcode dort haben):
 
-1. Den Ordner `assets/template/` dieses Skills nach `<kuerzel>/` kopieren.
-2. In allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`).
-3. `npm install` im Projektordner ausführen (installiert nur Vite 5.4.21).
+1. `references/template.md` lesen und die fünf Dateien daraus in `<kuerzel>/` anlegen (`package.json`, `vite.config.js`, `index.html`, `src/main.js`, `src/style.css`) – bis auf die Platzhalter zeichengenau.
+2. Dabei in allen Dateien `__KUERZEL__` durch das Kürzel und `__TITEL__` durch den Titel der Erweiterung ersetzen. Den Titel vorher HTML-escapen (`&`, `<`, `>`) und Backticks, Backslashes sowie `${` daraus entfernen.
+3. `npm install` im Projektordner ausführen (installiert nur Vite 8.3.8; braucht Node.js ab 20.19 bzw. ab 22.12 – bei älterem Node den Benutzer bitten, Node zu aktualisieren, nicht die Vite-Version senken). Meldet `npm` Schwachstellen, dem Benutzer nennen; kein `npm audit fix --force` ausführen. Den Entwicklungsserver (`vite dev`/`vite preview`) nicht starten.
 
 Die Vorlage bringt mit:
 - `vite.config.js` mit `base: '/ccm/<kuerzel>/'`
@@ -46,7 +46,7 @@ Die eigentliche Funktion in `start()` in `src/main.js` einbauen; größere Erwei
 Regeln für den Code:
 - API nur über `api`/`apiAll` aufrufen, nicht mit eigenem `fetch` – sonst fehlt bei POST/PUT/PATCH/DELETE der Header `CSRF-Token`.
 - Alle Benutzerdaten vor der Ausgabe mit `esc()` escapen (oder per `textContent` setzen).
-- Kein `await` auf oberster Ebene in Modulen (bricht den Build mit dem Standard-Target von Vite); asynchronen Code in Funktionen wie `start()` legen.
+- Kein `await` auf oberster Ebene in Modulen; asynchronen Code in Funktionen wie `start()` legen, damit Fehler in der Fehleranzeige landen statt in einer leeren Seite.
 - CSS unter der Wurzelklasse `.ct-ext` kapseln, damit das ChurchTools-Layout unverändert bleibt.
 - Keine instanzspezifischen IDs (Gruppen-, Personen-, Kalender-IDs) hart codieren, wenn sie sich ermitteln lassen; sonst als Konstanten oben in `main.js` sammeln und dem Benutzer nennen.
 - Mobil nutzbar bauen (ChurchTools wird oft am Handy geöffnet).
@@ -57,9 +57,12 @@ Wichtige Endpunkte: `references/api.md`. Bei Unsicherheit die OpenAPI-Doku der I
 
 ## 4. Bauen und packen
 
+Alle Befehle im Projektordner `<kuerzel>/` ausführen; dort entsteht auch die ZIP.
+
 macOS/Linux:
 ```bash
 npx vite build
+rm -f <kuerzel>-extension.zip   # sonst bleiben alte Assets im Archiv
 cd dist && zip -qr ../<kuerzel>-extension.zip . && cd ..
 unzip -l <kuerzel>-extension.zip   # prüfen: index.html + assets/ im Wurzelverzeichnis
 ```
@@ -67,6 +70,7 @@ unzip -l <kuerzel>-extension.zip   # prüfen: index.html + assets/ im Wurzelverz
 Windows (PowerShell, `zip` fehlt dort meist):
 ```powershell
 npx vite build
+Remove-Item <kuerzel>-extension.zip -ErrorAction SilentlyContinue
 tar -a -c -f <kuerzel>-extension.zip -C dist index.html assets
 tar -t -f <kuerzel>-extension.zip   # prüfen: index.html + assets/... ohne "dist/" davor
 ```

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 – 2026-11-11
+- Projektvorlage als Markdown-Referenz (`references/template.md`) statt als Dateien unter `assets/template/` – das Plugin enthält damit nur noch Markdown, JSON und das Icon (Vorgabe des Plugin-Verzeichnisses)
+- Anleitung nach Testlauf geschärft: Titel-Escaping direkt im Skill, alte ZIP vor dem Packen löschen, Arbeitsverzeichnis fürs Bauen genannt, Umgang mit `npm audit`-Meldungen
+- Vite 5.4.21 → 8.3.8 (`npm audit` meldet damit keine Schwachstellen mehr; braucht Node.js ab 20.19 bzw. ab 22.12)
+
 ## 0.2.0 – 2026-11-09
 - Projektvorlage unter `skills/churchtools-extension/assets/template/` statt Inline-Code im Skill
 - Vorlage: `api`-Helfer setzt `CSRF-Token` und `Content-Type` selbst, dazu `apiAll` (Paginierung), `esc` (HTML-Escaping) und Fehleranzeige für 401/403
