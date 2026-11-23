@@ -1,7 +1,6 @@
 {
   "name": "churchtools-extension-builder",
-  "displayName": "ChurchTools Extension Builder",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Eigene ChurchTools-Erweiterungen (Custom Modules unter /ccm/...) für jede ChurchTools-Instanz bauen, packen und installieren.",
   "author": {
     "name": "Otto Schmidt"
@@ -17,7 +16,5 @@
   ],
   "homepage": "https://osdt.dev",
   "repository": "https://github.com/osdt-tech/churchtools-extension-builder",
-  "documentationUrl": "https://github.com/osdt-tech/churchtools-extension-builder#readme",
-  "supportUrl": "https://github.com/osdt-tech/churchtools-extension-builder/issues",
   "privacyPolicyUrl": "https://github.com/osdt-tech/churchtools-extension-builder#datenschutz"
 }
